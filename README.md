@@ -1,14 +1,9 @@
-[//]: # (Image References)
 
-[image1]: https://user-images.githubusercontent.com/10624937/43851024-320ba930-9aff-11e8-8493-ee547c6af349.gif "Trained Agent"
-[image2]: https://user-images.githubusercontent.com/10624937/43851646-d899bf20-9b00-11e8-858c-29b5c2c94ccc.png "Crawler"
-
-
-# DDPG Reacher
+# MADDPG
 
 ### Introduction
 
-This experiment implements the DDPG algorithm to train a mechanical arm to reach for a moving target inside the unity ML-Agents virtual [Reacher](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) environment. In this environment, a double-jointed arm can move to target locations.
+This experiment implements the Multi Agent Deep Deterministic Policy Gradient algorithm to train a two independent agents to learn how to keep passing the ball back and fort (rallying) inside the unity ML-Agents virtual [Tennis](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) environment. In this environment, two paddles move within their side of the tennis court in an attempt to hit the ball back to the opposite agent.
 
 ![Trained Agent][image1]
 
