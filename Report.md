@@ -45,8 +45,15 @@ The final problem associated with continuous action spaced environments is that 
 
       μ′(st) = μ(st|θtμ) + N
 
-### MADDPG
-![MADDPG Pseudo Code](/images/MADDPG_Psuedo.jpg)
+### MADDPG Psuedo
+<img src="/images/MADDPG_Psuedo.jpg" alt="MADDPG Pseudo Code" width="500"/>
+
+### MADDPG Multi Critics
+<img src="/images/multi_critic.png" alt="Multi Critics" width="500" />
+
+### COMA Single Critic
+<img src="/images/single_critic.png" alt="Single Critics" width="500"/>
+      
 
 
 ## Experiments and Training
