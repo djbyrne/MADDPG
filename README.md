@@ -5,7 +5,7 @@
 
 This experiment implements the Multi Agent Deep Deterministic Policy Gradient algorithm to train a two independent agents to learn how to keep passing the ball back and fort (rallying) inside the unity ML-Agents virtual [Tennis](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) environment. In this environment, two paddles move within their side of the tennis court in an attempt to hit the ball back to the opposite agent.
 
-![Trained Agent][https://github.com/djbyrne/MADDPG/blob/master/images/trained_maddpg.gif]
+![Trained Agent][https://raw.githubusercontent.com/djbyrne/MADDPG/master/images/trained_maddpg.gif?token=AEoVZYeqUGUA6821_4WQLRgJy7Abawfdks5ca5lywA%3D%3D]
 
 ### Rewards
 
