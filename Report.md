@@ -8,28 +8,26 @@ The Reacher environment provided an interesting challenge and required several s
 
 # The Environment
 
-![Trained Agent](https://user-images.githubusercontent.com/10624937/43851024-320ba930-9aff-11e8-8493-ee547c6af349.gif)
+![Trained Agent](/images/trained_maddpg.gif)
 
 The environment used for this project was built using the Unity [ml-agents](https://github.com/Unity-Technologies/ml-agents) framework.
 
-In this environment, a double-jointed arm can move to target locations. A reward of +0.1 is provided for each step that the agent's hand is in the goal location. Thus, the goal of your agent is to maintain its position at the target location for as many time steps as possible.
+In this environment, two independent agents each control a paddle and are tasked with rallying the ball back and forth for as long as possible. A reward of +0.1 is given each time the agent hits the ball over the net. A reward of -0.1 is given to the agent each time the ball hits their side of the court.
 
-The observation space consists of 33 variables corresponding to position, rotation, velocity, and angular velocities of the arm. 
+The observation space consists of 8 variables corresponding to position and velocity of the ball and agents paddle. 
 
-Each action is a vector with four numbers, corresponding to torque applicable to two joints. Every entry in the action vector should be a number between -1 and 1.
+The action space consists of 2 continuous actions corresponding to movement toward net or away from net, and jumping.
 
-# Algorithm Used - DDPG
+# Algorithm Used - MADDPG
 
-I chose to go with DDPG as the DeepMind paper [DeepMind Control Suite](https://arxiv.org/pdf/1801.00690.pdf)[2] shows that it has excellent results in a similar reacher environment. Here the paper looks at A3C, DDPG and D4PG. The results shows that D4PG drastically outperforms A3C and was followed closely by DDPG.
+I chose to go with Multi Agent Deep Deterministic Policy Gradient (MADDPG) algorithm as the OpenAI paper [Multi-Agent Actor-Critic for Mixed
+Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf)[2] shows that MADDPG outperforms many other RL algorithms. Here the paper looks at DQN , TRPO and DDPG. The results shows that MADDPG is able to not only converge faster, but is also more stable during training. It is worth pointing out that current state of the art algorithms such as PPO and SAC were not tested at the time of writing. Although these algorithms are capable of perform as well as, or if not better, than MADDPG, due to my past experiences with standard DDPG for similar control tasks I felt that MADDPG was a good algorithm to apply.
 
 The graph below shows the results of the papers experiments on the Reacher:Hard environment from deepmind. A3C(Orange) DDPG(Light Blue), D4PG(Dark Blue):
 <br />
 ![Paper Results](images/research.png)
 
-
-I chose to implement DDPG over D4PG as DDPG is more data efficient before 1e7 environment steps[2]. My resources and amount of time I can afford to spend training my model is significantly less than that of DeepMind, as such I prioritized DDPG as it will train more efficiently when given less training steps.
-
-This report will go through the methodology of DDPG, the experiments and changes I made during training, the results achieved from these experiments and finally my thoughts on future work.
+This report will go through the methodology of MADDPG, the experiments and changes I made during training, the results achieved from these experiments and finally my thoughts on future work.
 
 ## Methodology
 
