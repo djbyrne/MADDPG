@@ -18,26 +18,20 @@ The observation space consists of 8 variables corresponding to position and velo
 
 The action space consists of 2 continuous actions corresponding to movement toward net or away from net, and jumping.
 
-# Algorithm Used - MADDPG
+# Algorithm Used - MADDPG/COMA
 
-I chose to go with Multi Agent Deep Deterministic Policy Gradient (MADDPG) algorithm as the OpenAI paper [Multi-Agent Actor-Critic for Mixed
-Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf)[2] shows that MADDPG outperforms many other RL algorithms. Here the paper looks at DQN , TRPO and DDPG. The results shows that MADDPG is able to not only converge faster, but is also more stable during training. It is worth pointing out that current state of the art algorithms such as PPO and SAC were not tested at the time of writing. Although these algorithms are capable of perform as well as, or if not better, than MADDPG, due to my past experiences with standard DDPG for similar control tasks I felt that MADDPG was a good algorithm to apply.
+Initially I chose to go with Multi Agent Deep Deterministic Policy Gradient (MADDPG) algorithm as the OpenAI paper [Multi-Agent Actor-Critic for Mixed
+Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf)[2] shows that MADDPG outperforms many other RL algorithms. Here the paper looks at DQN , TRPO and DDPG. The results shows that MADDPG is able to not only converge faster, but is also more stable during training. It is worth pointing out that current state of the art algorithms such as PPO and SAC were not tested at the time of writing. Although these algorithms are capable of perform as well as, or if not better, than MADDPG, due to my past experiences with standard DDPG for similar control tasks I felt that MADDPG was a good algorithm to apply. However a key feature of MADDPG is the centralized critic networks for each agent. This used to allow multi agents to learn from different rewards, thus allowing MADDPG to be used in environments that can only use local information, does not assume a differentiable model of the environment dynamics and most importantly, allows the agent to be trained in bot competitive and coopoerative environments. This is very powerful, however as the Tennis environment uses the same reward function for all agents this level of generalisation is unnecessary. As such I felt that the approach used in the paper [Counterfactual Multi-Agent Policy Gradients](https://arxiv.org/pdf/1705.08926.pdf) is better suited to this problem. In this paper researchers at Oxford took a different approach to the multi agent problem and used a shared critic between the agents. This provides a counterfactual baseline that improves both the speed of training and performance of multi agents. In my experiments I implemented an MADDPG using a single shared critic in order to improve training based on this environment. 
 
-The graph below shows the results of the papers experiments on the Reacher:Hard environment from deepmind. A3C(Orange) DDPG(Light Blue), D4PG(Dark Blue):
-<br />
-![Paper Results](images/research.png)
-
-This report will go through the methodology of MADDPG, the experiments and changes I made during training, the results achieved from these experiments and finally my thoughts on future work.
+This report will go through the methodology of my implementation, the experiments and changes I made during training, the results achieved from these experiments and finally my thoughts on future work.
 
 ## Methodology
 
-DDPG is an off-policy, actor critic method that performs more like an advanced DQN built for continuous tasks. Although DQN has achieved superhuman performance on a number of environments such as the Atari games, it can only handle discrete and low-dimensional action spaces[1]. As such it cant handle continuous action spaces. This problem can be solved by combining the techniques used in DQN with the actor-critic methodology.
+DDPG is an off-policy, actor critic method that performs more like an advanced DQN built for continuous tasks. Although DQN has achieved superhuman performance on a number of environments such as the Atari games, it can only handle discrete and low-dimensional action spaces[1]. As such it cant handle continuous action spaces. This problem can be solved by combining the techniques used in DQN with the actor-critic methodology. This new form of algorithm is capable of tackeling a much broader range of more complicated tasks such as the control problem provided in the Tennis environment. The next key component is the modification to allow for multi agents to learn to interact in the same environment. 
 
 ### DDPG 
-![DDPG Pseudo Code](images/DDPG_Pseudo.png)
+![DDPG Pseudo Code](/images/DDPG_Psuedo.png)
 
-### MADDPG
-![MADDPG Pseudo Code](images/MADDPG_Pseudo.png)
 As stated previously it is impractical to try and map Q values to state/actions for continuous tasks as Q learning requires an optimization step at each time step. This step is simply too slow for large, unconstrained function approximators and nontrivial action spaces[1]. Instead DDPG uses the actor network to maintain the current deterministic policy using the actor function μ(s|θμ) which maps states to the best action. Just like in Q learning, the critic is learned using the Q function Q(s|a) to determine the state/action value. During this calculation the critic takes in the output of the actor as target for training, similar to the approach used in DQN.
 
 ![Actor Critic Exampl](https://camo.githubusercontent.com/93fecaeda4aa38d024fa35b8d5e1b13329a9ea21/68747470733a2f2f7777772e73746576656e737069656c626572672e6d652f70726f6a656374732f696d616765732f646470675f747261696e2e676966)
@@ -50,6 +44,10 @@ One problem seen in many experiments using Q learning with neural networks is th
 The final problem associated with continuous action spaced environments is that of exploration. DQN uses an epsilon-greedy approach, that works well for discrete action spaces but is not sufficient for continuous action spaces. Instead DDPG  constructs an exploration policy μ′ by adding noise sampled from a noise process N to our actor policy[1]. The noise used here is the Ornstein-Uhlenbeck process (Uhlenbeck & Ornstein, 1930).
 
       μ′(st) = μ(st|θtμ) + N
+
+### MADDPG
+![MADDPG Pseudo Code](/images/MADDPG_Psuedo.jpg)
+
 
 ## Experiments and Training
 
