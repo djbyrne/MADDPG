@@ -68,7 +68,7 @@ During my previous implementation of DDPG I learned a lot about the algorithm an
 
 My previous implementation performed very well and at first I was naive enough to believe that the same network architecture and hyperparameters would work for this environment as well. Unfortunately I was mistaken. 
 
-**Previous Network Architecture
+**Previous Network Architecture**
 
 | Layers           |Parameters           |
 |:-------------:| :-------------:| 
@@ -78,7 +78,7 @@ My previous implementation performed very well and at first I was naive enough t
 | ReLU activation| NA| 
 |Dense Layer|4| 
 
-**Previous Hyperparameters
+**Previous Hyperparameters**
 
 | Parameter | Value |  
 |:-------------:| :-------------:|
