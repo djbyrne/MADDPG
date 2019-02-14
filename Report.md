@@ -58,7 +58,7 @@ The diagram above shows the architecture of the MADDPG agents. Each agent has it
 ### COMA Single Critic
 <img src="/images/single_critic.png" alt="Single Critics" width="500"/>
       
-The Counterfactual Multi Agent approach differs from MADDPG in its use of the critic network. Instead of using individual critics, it has a single critic that all agents feed into
+The Counterfactual Multi Agent approach differs from MADDPG in its use of the critic network. Instead of using individual critics, it has a single critic that all agents feed into as seen in the diagram above. This means that all agents are being evaluated by the same critic and allows the agents to learn faster. 
 
 ## Experiments and Training
 
