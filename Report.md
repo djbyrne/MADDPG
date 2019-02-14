@@ -62,26 +62,13 @@ The Counterfactual Multi Agent approach differs from MADDPG in its use of the cr
 
 ## Experiments and Training
 
-One of the main appeals of the DDPG algorithms is the simplicity of its implementation while still providing state of the art results. Although the implementation is simple, fine tuning the architecture and parameters of the agent can still be a difficult and time consuming task. During my implementation of the algorithm I ran into several problems that were eventaully solved by making changes to several key areas.
-
-**Updates**
-
-As seen in the pseudo code adove, the original paper shows that the algorithm performs an update step at each time step. When trying this in my initial experiments the agent was unable to get passed an average score of 1. During my research that other people tried to periodically update the agent, for example every 10 timesteps the agent would 20 update steps. This was in an attempt to update with a larger and more diverse sample. I experimented with several variations of update frequency and iterations. Eventually I tried only updating the agent at the end of an episode for 10 timesteps and this proved to provide the most stable results. I am still unsure why this performed better than simply updating at each timestep as seen in the paper. My theory is that by waiting for the end of the episode there is a more diverse experience buffer to sample from which  improves the stability of the agent. 
-
-**Catastrophic Forgetting**
-
-A common problem when training neural networks is that convergence and stabilty is not garunteed. This is painfully displayed in the phenomenon known as "catastrophic forgetting". This is when a network continues to improve until it will begin to (sometimes suddenly) deteriorate. This is shown in the graph below.
-
-![Catastrophic Forgetting](images/catastrophic_forgetting.png)
-
-It is still unclear what exactly causes this convergence on a poor policy but is likely a combination of poor hyper-parameters. During my research and experiments I discovered that the samples used during the update step was critical for fixing this issue. By increase the size of my experience replay buffer to 10000000 and my batch size to 512 the agents training stablized. I believe this comes back to the problem seen in my update steps of diverse samples. By increasing the amount of experiences store and the sample size, the agent is able to update and learn on more generalised data. This reduces the possibility of the agent getting stuck in a local minima due to poor experience replay.
+During my previous implementation of DDPG I learned a lot about the algorithm and was able to solve a lot of problems that came up during my first attempt at implementation. During this project I was able to avoid most of the problems I had seen before such as catostrophic forgetting. This project came with its own array of challenges and problems that I needed to work through.
 
 **Model Architecture**
 
-The final piece of the puzzle was finding the correct network architecture for the reacher agent. I experimented with both the initial architecture found in the Udacity example which was an MLP with 2 layers of 400 and 300 nodes each with a ReLU layer. Both the Actor and Critic used the same network architecture This model showed promise and was able to learn, but was incredibly slow, taking more than 50 episodes to get past an average score of 1. The next experiment was to use the same architecture found in DeepMinds paper[link] which was the same for the critic but used 300 and 200 nodes respectively for the actore layers. Again, this showed that the agent was learning, but was very slow. This could be that the initial training of the agent was slow but after an initial period would pick up. 
+My previous implementation performed very well and at first I was naive enough to believe that the same network architecture and hyperparameters would work for this environment as well. Unfortunately I was mistaken. 
 
-I began to suspect that the agent was unable to accurately assign credit correctly due to the (relative) complexity of the environment. In order to solve this I began experimenting with much larger networks. Eventually I settled on the follow network architecture and provided the best results for this environment.
-
+### Previous Network Architecture
 | Layers           |Parameters           |
 |:-------------:| :-------------:| 
 | Dense Layer| 1000| 
@@ -90,6 +77,19 @@ I began to suspect that the agent was unable to accurately assign credit correct
 | ReLU activation| NA| 
 |Dense Layer|4| 
 
+### Previous Hyperparameters
+| Parameter | Value |  
+|:-------------:| :-------------:|
+|Learning Rate Actor    | 0.0001   |  
+|Learning Rate Critic   | 0.0001   |  
+|Weight Decay | 0 |
+|Batch Size    | 512     | 
+|Buffer Size    | 1000000    | 
+|Update Size | 10 |
+| Tau | 0.001|
+|Gamma| 0.99|
+
+The agent was incredibly slow and did not show any signs of learning. Through various rounds of trial and error where I tweaked my 
 # Results
 
 I conclusion, DDPG was successfully able to converge on an optimal policy that was capable of reaching and maintaining an average score of 39.4 . This required some tweaking of the update parameters and large network than described in literature but achieved good results. The full results and hyperparameters used are shown below. As you can see from the graph, the agent is slow to learn at first, but after ~50 episodes the learn improves drastically. As you can see from the plot below, the agent began hitting a score 39/40 after ~100 episodes and reached the competion score of 30 after ~70 episodes. Of course it took longer to get the 100 episode average to prove that the agents score was stable.
