@@ -48,10 +48,12 @@ The final problem associated with continuous action spaced environments is that 
 ### MADDPG Psuedo
 <img src="/images/MADDPG_Psuedo.jpg" alt="MADDPG Pseudo Code" width="500"/>
 
-My implementation of MADDPG
+As you can see from the psuedo code, MADDPG is very similar to the standard DDPG algorithm. All that is required is to manage the individual DDPG agent allowing them to act independently while using the same replay buffer to learn from. My implementation uses a master MultiAgent class that initializes all the agents and manages the main functions for training such as step, act and learn. When the act and learn functions are called, the MultiAgent iterates through all the agents and carries out the function for each agent. The step function is used to store the experiences of all agents in a shared buffer and is there fore universal. 
 
 ### MADDPG Multi Critics
 <img src="/images/multi_critic.png" alt="Multi Critics" width="500" />
+
+The diagram above shows the architecture of the MADDPG agents. Each agent has its own actor and critic
 
 ### COMA Single Critic
 <img src="/images/single_critic.png" alt="Single Critics" width="500"/>
