@@ -91,7 +91,7 @@ My previous implementation performed very well and at first I was naive enough t
 | Tau | 0.001|
 |Gamma| 0.99|
 
-The agent was incredibly slow and did not show any signs of learning. Through various rounds of trial and error where I tweaked my 
+The agent was incredibly slow and did not show any signs of learning. Through various rounds of trial and error where I tweaked my parameters I concluded that not only was my network too wide but also too simplistic for this environment. After several experiments and 
 # Results
 
 I conclusion, DDPG was successfully able to converge on an optimal policy that was capable of reaching and maintaining an average score of 39.4 . This required some tweaking of the update parameters and large network than described in literature but achieved good results. The full results and hyperparameters used are shown below. As you can see from the graph, the agent is slow to learn at first, but after ~50 episodes the learn improves drastically. As you can see from the plot below, the agent began hitting a score 39/40 after ~100 episodes and reached the competion score of 30 after ~70 episodes. Of course it took longer to get the 100 episode average to prove that the agents score was stable.
