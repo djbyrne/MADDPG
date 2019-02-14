@@ -53,12 +53,12 @@ As you can see from the psuedo code, MADDPG is very similar to the standard DDPG
 ### MADDPG Multi Critics
 <img src="/images/multi_critic.png" alt="Multi Critics" width="500" />
 
-The diagram above shows the architecture of the MADDPG agents. Each agent has its own actor and critic
+The diagram above shows the architecture of the MADDPG agents. Each agent has its own actor and critic. These individual critics are assigned to their respective agents and identifies the value of their agents actions independently. This allows an agent to learn a different policy from other agents in its environment . This is very usful when you are dealing with an environment where not all agents should behave the same way. However in the tennis environment we want our agents to learn the same reward function.
 
 ### COMA Single Critic
 <img src="/images/single_critic.png" alt="Single Critics" width="500"/>
       
-
+The Counterfactual Multi Agent approach differs from MADDPG in its use of the critic network. Instead of using individual critics, it has a single critic that all agents feed into
 
 ## Experiments and Training
 
