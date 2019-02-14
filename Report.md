@@ -1,10 +1,8 @@
 # Intro
 
-This project looks at implementing the [Deep Deterministic Policy Gradient](https://arxiv.org/pdf/1509.02971.pdf) (DDPG) algorithm in order to solve the Reacher environment.
+This project looks at implementing the [Deep Deterministic Policy Gradient](https://arxiv.org/pdf/1509.02971.pdf) (DDPG) algorithm in a multi agent environment. DDPG was not designed for this type of environment and will not fit the problem straight out of the box. Luckily there has been a lot of research carried out in the area of Multi Agent Reinforcement Learning (MARL) and there are several ways to adapt the DDPG algorithm to suit this environment
 
-This implementation used the ddpg pendulum example from the Udacity deep reinforcment learning repository as a foundation and was adapted to suite the Reacher environment. This project can be found [here](https://github.com/udacity/deep-reinforcement-learning/tree/master/ddpg-pendulum)
-
-The Reacher environment provided an interesting challenge and required several subtle but integral changes to the my initial code in order for the agent to train successfully.
+The Tennis environment provided an interesting challenge and required several modifications to my original DDPG implementation. These modifications came from two papers discussed below. Using the methods describe in these paper, the agent was able to successfully learn how to co-opoerate with each other in order keep the tennis ball in play for as long as possible.
 
 # The Environment
 
@@ -21,7 +19,9 @@ The action space consists of 2 continuous actions corresponding to movement towa
 # Algorithm Used - MADDPG/COMA
 
 Initially I chose to go with Multi Agent Deep Deterministic Policy Gradient (MADDPG) algorithm as the OpenAI paper [Multi-Agent Actor-Critic for Mixed
-Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf)[5] shows that MADDPG outperforms many other RL algorithms. Here the paper looks at DQN , TRPO and DDPG. The results shows that MADDPG is able to not only converge faster, but is also more stable during training. It is worth pointing out that current state of the art algorithms such as PPO and SAC were not tested at the time of writing. Although these algorithms are capable of perform as well as, or if not better, than MADDPG, due to my past experiences with standard DDPG for similar control tasks I felt that MADDPG was a good algorithm to apply. However a key feature of MADDPG is the centralized critic networks for each agent. This used to allow multi agents to learn from different rewards, thus allowing MADDPG to be used in environments that can only use local information, does not assume a differentiable model of the environment dynamics and most importantly, allows the agent to be trained in bot competitive and coopoerative environments. This is very powerful, however as the Tennis environment uses the same reward function for all agents this level of generalisation is unnecessary. As such I felt that the approach used in the paper [Counterfactual Multi-Agent Policy Gradients](https://arxiv.org/pdf/1705.08926.pdf)[4] is better suited to this problem. In this paper researchers at Oxford took a different approach to the multi agent problem and used a shared critic between the agents. This provides a counterfactual baseline that improves both the speed of training and performance of multi agents. In my experiments I implemented an MADDPG using a single shared critic in order to improve training based on this environment. 
+Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf)[5] shows that MADDPG outperforms many other RL algorithms. Here the paper looks at DQN , TRPO and DDPG. The results shows that MADDPG is able to not only converge faster, but is also more stable during training. It is worth pointing out that current state of the art algorithms such as PPO and SAC were not tested at the time of writing. Although these algorithms are capable of perform as well as, or if not better, than MADDPG, due to my past experiences with standard DDPG for similar control tasks I felt that MADDPG was a good algorithm to apply. However a key feature of MADDPG is the centralized critic networks for each agent. This is used to allow multi agents to learn from different rewards, thus allowing MADDPG to be used in environments that can only use local information, does not assume a differentiable model of the environment dynamics and most importantly, allows the agent to be trained in bot competitive and coopoerative environments. 
+
+This is very powerful, however as the Tennis environment uses the same reward function for all agents this level of generalisation is unnecessary. As such I felt that the approach used in the paper [Counterfactual Multi-Agent Policy Gradients](https://arxiv.org/pdf/1705.08926.pdf)[4] is better suited to this problem. In this paper researchers at Oxford took a different approach to the multi agent problem and used a shared critic between the agents. This provides a counterfactual baseline that improves both the speed of training and performance of multi agents. In my experiments I implemented an MADDPG using a single shared critic in order to improve training based on this environment. 
 
 This report will go through the methodology of my implementation, the experiments and changes I made during training, the results achieved from these experiments and finally my thoughts on future work.
 
@@ -47,6 +47,8 @@ The final problem associated with continuous action spaced environments is that 
 
 ### MADDPG Psuedo
 <img src="/images/MADDPG_Psuedo.jpg" alt="MADDPG Pseudo Code" width="500"/>
+
+My implementation of MADDPG
 
 ### MADDPG Multi Critics
 <img src="/images/multi_critic.png" alt="Multi Critics" width="500" />
