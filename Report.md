@@ -91,27 +91,63 @@ My previous implementation performed very well and at first I was naive enough t
 | Tau | 0.001|
 |Gamma| 0.99|
 
-The agent was incredibly slow and did not show any signs of learning. Through various rounds of trial and error where I tweaked my parameters I concluded that not only was my network too wide but also too simplistic for this environment. After several experiments and 
+The agent was incredibly slow and did not show any signs of learning. Through various rounds of trial and error where I tweaked my parameters I concluded that not only was my network too wide but also too simplistic for this environment. After several experiments and tunning I discovered that my network architecture still worked well and I only needed to change up my parameters as follows:
+
+**Hyper Parameters**
+
+| Actor Layers           |Parameters           |
+|:-------------:| :-------------:| 
+| Dense Layer| 256| 
+| ReLU activation| NA|   
+| Dense Layer| 256| 
+| ReLU activation| NA| 
+|Dense Layer|2| 
+
+| Critic Layers           |Parameters           |
+|:-------------:| :-------------:| 
+| Dense Layer| 128| 
+| ReLU activation| NA|   
+| Dense Layer| 128| 
+| ReLU activation| NA| 
+|Dense Layer|1| 
+
+| Parameter | Value |  
+|:-------------:| :-------------:|
+|Learning Rate Actor    | 0.0001   |  
+|Learning Rate Critic   | 0.0001   |  
+|Weight Decay | 0 |
+|Batch Size    | 64     | 
+|Buffer Size    | 1000000    | 
+|Update Step | 2 |
+|Update Size | 1 |
+| Tau | 0.001|
+|Gamma| 0.99|
+|Exploration Steps|50000|
+
 # Results
 
-I conclusion, DDPG was successfully able to converge on an optimal policy that was capable of reaching and maintaining an average score of 39.4 . This required some tweaking of the update parameters and large network than described in literature but achieved good results. The full results and hyperparameters used are shown below. As you can see from the graph, the agent is slow to learn at first, but after ~50 episodes the learn improves drastically. As you can see from the plot below, the agent began hitting a score 39/40 after ~100 episodes and reached the competion score of 30 after ~70 episodes. Of course it took longer to get the 100 episode average to prove that the agents score was stable.
+I conclusion, my mutlti agent implementation DDPG was successfully able to converge on an optimal policy that was capable of reaching and maintaining an average score of 2.5 and a high score of 2.6 given the time step limit of 1000 . This required some tweaking of the update parameters and some modifications to the structure of the agents critic network that combined ideas from MADDPG and COMA. My experiments show that the model using COMA's approach of a single critic worked well in this environment. This can be seen in the plots below visualising the results of both the single and multi critic agents trained in the tennis environment.
+
+
+**Overview**
+
+![Overview](images/Results_Overview.png)
+
+**Agent Scores**
+![Overview](images/Results_Scores.png)
+
+**Moving Average**
+![Overview](images/Results_Moving_Average.png)
+
+
+
+
+The full results and hyperparameters used are shown below. As you can see from the graph, the agent is slow to learn at first, but after ~50 episodes the learn improves drastically. As you can see from the plot below, the agent began hitting a score 39/40 after ~100 episodes and reached the competion score of 30 after ~70 episodes. Of course it took longer to get the 100 episode average to prove that the agents score was stable.
 
 Based on this I believe that other architectures, such as the one described in the DDPG paper, may work equally well but I simply did let the agent train for long enough. Nonetheless, I am very happy with the results of my agent.
 
 ![DDDQN](/images/ddpg_40.png)
 
-| Parameter | Value |  
-|:-------------:| :-------------:|
-|Layer 1    | 1000     | 
-|Layer 2    | 1000     |  
-|Learning Rate Actor    | 0.0001   |  
-|Learning Rate Critic   | 0.0001   |  
-|Weight Decay | 0 |
-|Batch Size    | 512     | 
-|Buffer Size    | 1000000    | 
-|Update Size | 10 |
-| Tau | 0.001|
-|Gamma| 0.99|
 
 
 # Future Work
