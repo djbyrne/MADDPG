@@ -141,22 +141,16 @@ I conclusion, my mutlti agent implementation DDPG was successfully able to conve
 
 
 
-
-The full results and hyperparameters used are shown below. As you can see from the graph, the agent is slow to learn at first, but after ~50 episodes the learn improves drastically. As you can see from the plot below, the agent began hitting a score 39/40 after ~100 episodes and reached the competion score of 30 after ~70 episodes. Of course it took longer to get the 100 episode average to prove that the agents score was stable.
-
-Based on this I believe that other architectures, such as the one described in the DDPG paper, may work equally well but I simply did let the agent train for long enough. Nonetheless, I am very happy with the results of my agent.
-
-![DDDQN](/images/ddpg_40.png)
-
+As you can see from the results, the MADDPG approach takes over 800 more episodes just to reach the 0.5 avg mark. Not only was the COMA agent able to reach 0.5 faster, it then went on to achieve a stable average of 2.4 and a high score of 2.6. This seems to suggest that a single critic for all agents performs better in environments that have the same reward function for all agents, such as the Tennis environment. In conclusion, these experiments show that with some modifications DDPG can successfully be used within the complex domain of Multi Agent Reinforcement Learning.
 
 
 # Future Work
 
 ## D4PG
-The obvious next step would be to try to implement the successor of DDPG, Distributed Distributional Deterministic Policy Gradient. This is a much more advanced algorithm and has been shown to significantly improve upon DDPG for most tasks under most conditions. 
+The obvious next step would be to try to implement the successor of DDPG, Distributed Distributional Deterministic Policy Gradient. This is a much more advanced algorithm and has been shown to significantly improve upon DDPG for most tasks under most conditions as it uses a probability distribution for the critic value as opposed the the deterministic value of DDPG. This will potentially help the critic understand more complex reward systems that might even vary slightly between agents. An example of this the side of the court our agents start on. Although they both have the same reward, the policies they learn are essentially reversed as they are both learning to hit the ball in opposite directions. Theoretically a distributional critic will be able to improve the understanding of these reward functions.
 
-## Crawler Environment
-With the success of the agent in the reacher environment I attempted to train it on the more advanced crawler environnment. Unfortunately the crawler binary was not able to run when I began training. I am not sure why this is the case and I am waiting for a response from the Udacity team on the issue. Once I get a working copy of the binary I will begin training my DDPG agent on the crawler.
+## Curiosity Driven RL
+I think that a co-operative problem such as the Tennis environment is a perfect use case for curiosity based RL agents. These agents are not given a reward function but are instead rewarded for discovering new states that it hasn't seen before. This will encourage the agents to rally back and forth for ever as it will continously be a new state the longer the rally continues. These methods are currently state of the art and are currently a very exciting research topic that I would love to work on further
 
 # References
 
