@@ -45,7 +45,7 @@ git clone https://github.com/djbyrne/DDPG_Reacher.git
 cd DDPG_Reacher
 pip install .
 ```
-3.Download the environment from one of the links below.  You need only select the environment that matches your operating system:
+3. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
 
 - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux.zip)
 - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher.app.zip)
