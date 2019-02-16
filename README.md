@@ -23,19 +23,37 @@ Continuous) Size of 2, corresponding to movement toward net or away from net, an
 ### Solving the Environment
 The environment is considered solved when the average score of all agents in the environment (in this case 2) for a period of 100 episodes is 0.5 or above, with a max score of 2.5 .
 
+
 ### Setup
 
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
+1. Create (and activate) a new environment with Python 3.6.
 
+	- __Linux__ or __Mac__: 
+	```bash
+	conda create --name ddpg python=3.6
+	source activate ddpg
+	```
+	- __Windows__: 
+	```bash
+	conda create --name ddpg python=3.6 
+	activate ddpg
+	```
 
-    - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux.zip)
-    - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher.app.zip)
-    - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86.zip)
-    - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip)
+2. Clone the repository and install dependencies.
+```bash
+git clone https://github.com/djbyrne/DDPG_Reacher.git
+cd DDPG_Reacher
+pip install .
+```
+3.Download the environment from one of the links below.  You need only select the environment that matches your operating system:
 
-2. Place the file in the project directory and change the environment path in the notebook
+        - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux.zip)
+        - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher.app.zip)
+        - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86.zip)
+        - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip)
+        
+4. Finally, run the setup.py file to install all dependencies for this project
 
-3. Finally, run the setup.py file to install all dependencies for this project
 
 ### Instructions
 
